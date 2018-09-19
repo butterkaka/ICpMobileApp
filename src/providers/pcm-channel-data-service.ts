@@ -35,6 +35,7 @@ export class PCMChannelDataService {
   //Mockdata check global value
   mockData: boolean = false;
   appResetFlag: boolean = true;
+  //disconnectAfterResume: boolean = true;
 
   regulatorSetupItems = [
     { Title: 'Feed forward', Value: 0, Min: 0, Max: 100, Steps: 1, Metric: '%' },

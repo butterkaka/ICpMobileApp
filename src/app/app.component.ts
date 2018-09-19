@@ -65,10 +65,21 @@ export class MyApp {
         this.ble.isConnected(this.pcmchannelservice.deviceIdGlobal)
         .then(() => { 
             console.log("connected in resume");
+            if(this.pcmchannelservice.appResetFlag){
+              console.log("disconnecting in resume....");
+              this.disconnectBle();
+              this.app.getActiveNav().popToRoot();
+              this.pcmchannelservice.appResetFlag=true;
+              //this.pcmchannelservice.disconnectAfterResume=true;
+            }
           },
-          () => { console.log("disconnected in resume")}
+          () => { 
+            console.log("disconnected in resume");
+            this.app.getActiveNav().popToRoot();
+          }
         );
-        this.pcmchannelservice.appResetFlag=true;
+        //this.pcmchannelservice.appResetFlag=true;
+        //this.pcmchannelservice.disconnectAfterResume=true;
       });
 
       this.idle.setIdle(8);

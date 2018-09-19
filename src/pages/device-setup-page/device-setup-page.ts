@@ -101,6 +101,7 @@ export class DeviceSetupPage {
     //clearInterval(this.intervalId);
     console.log("leaving device-setup-page");
     this.pcmchanneldataservice.appResetFlag = true;
+    //this.pcmchanneldataservice.disconnectAfterResume = true;
   }
 
   /** 
@@ -766,6 +767,7 @@ export class DeviceSetupPage {
           handler: data => {
             //for android
             this.pcmchanneldataservice.appResetFlag=false;
+            //this.pcmchanneldataservice.disconnectAfterResume=false;
             this.fileChooserFunction();
 
             // for ios
@@ -1110,14 +1112,16 @@ export class DeviceSetupPage {
         {
           text: Constants.messages.sendEmail,
           handler: data => {
-            this.sendEmail();
             this.pcmchanneldataservice.appResetFlag=false;
+            //this.pcmchanneldataservice.disconnectAfterResume=false;
+            this.sendEmail();
           }
         },
         {
           text: Constants.messages.openFile,
           handler: data => {
             this.pcmchanneldataservice.appResetFlag=false;
+            //this.pcmchanneldataservice.disconnectAfterResume=false;
             this.openFileSaved();
           }
         },
