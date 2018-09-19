@@ -1,0 +1,132 @@
+<!--
+  Generated template for the ScanDevicePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.  
+-->
+
+<!--Start Splashscreen-->
+<div id="pcmapp-overlay" [style.display]="splash ? 'flex': 'none'">
+    <ion-content>
+        <div class="first-row">
+            <div class="outer-img">
+                <img class="full-image" src="assets/images/Splash_draft.png" alt="">
+            </div>
+        </div>
+        <div class="rowFill">
+        </div>
+        <div class="row2">
+            <div padding>
+                <div class="header-style">ICp mobile app</div>
+                <div class="version-style">V.{{ appVersion }}</div>
+            </div>
+        </div>
+        <div class="image-custom row3">
+            <span>The Drive & Control Company</span>
+            <img float-right width="140px" src="assets/images/Rex_logo.png" alt="">
+        </div>
+    </ion-content>
+</div>
+<!--End Splashscreen-->
+
+<!-- <ion-header>
+    <ion-navbar class="header-nav-style">
+        <button float-left ion-buttons no-padding class="icon button-custom-inverted small">
+            <ion-icon *ngIf="true" name="settings" (tap)="gotoLicensePage()"></ion-icon>
+        </button>
+        <ion-title>
+            <h5>PCM devices</h5>
+        </ion-title>
+        <div class="title-image image-custom" float-right>
+            <img src="assets/images/Rex_logo.png">
+        </div>
+    </ion-navbar>
+</ion-header> -->
+
+<ion-header>
+    <ion-navbar hideBackButton="true" class="header-nav-style">
+        <ion-grid no-padding>
+            <ion-row no-padding class="align-center">
+                <ion-col no-padding col-auto>
+                    <button start ion-buttons no-padding class="icon button-custom-inverted small">
+                        <ion-icon *ngIf="true" name="information-circle" (tap)="gotoLicensePage()"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col class="align-center">
+                    <div no-margin>
+                        <h5 no-margin>
+                            ICp devices
+                        </h5>
+                    </div>
+                </ion-col>
+                <div class="title-image image-custom" float-right>
+                    <img src="assets/images/Rex_logo.png">
+                </div>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="content">
+    <ion-refresher (ionRefresh)="doRefreshScan($event)">
+            <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div padding>
+        <button ion-button block class="scan-button" (click)="scanDevices()">Scan</button>
+    </div>
+    <div>
+        <ion-list inset class="scan-list">
+            <ion-item-sliding *ngFor="let device of devices">
+                <!-- <button *ngIf="device.name!=null && device.name!='' && device.name.startsWith('PCM')" (click)="connectToDevice(device)" ion-item> -->
+                <button *ngIf="device.name!=null && device.name!=''" (click)="connectToDevice(device)" ion-item>
+                    <div float-left>{{device.name}}</div>
+                    <div float-right><ion-icon name="bluetooth"></ion-icon></div>
+                </button>
+                <ion-item-options side="left">
+                        <button ion-button (click)="addToFavorites(device)">Favorite</button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+    </div>
+    <div class="spinner-c" padding>
+        <ion-spinner *ngIf="isScanning==true" name="crescent"></ion-spinner>
+    </div>
+    <div *ngIf="favorites?.length > 0">
+        <ion-list inset class="scan-list">
+            <ion-list-header><strong>Favorites</strong></ion-list-header>
+            <ion-item-sliding *ngFor="let device of favorites">
+                <button *ngIf="device.name!=null && device.name!=''" (click)="connectToDevice(device)" ion-item>
+                    <div float-left>{{device.name}}</div>
+                    <div float-right><ion-icon name="bluetooth"></ion-icon></div>
+                </button>
+                <ion-item-options side="left">
+                    <button class="remove-btn" (click)="removeFromFavorites(device)">Remove</button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+
+         <!-- <ion-list padding inset class="scan-list">
+            <h2>Favorites</strong>
+            </h2>
+            <ion-item-sliding *ngFor="let device of favorites">
+                <button *ngIf="device.name!=null && device.name!=''" (click)="connectToDevice(device)" ion-item>
+                    <div float-left>{{device.name}}</div>
+                    <div float-right><ion-icon name="bluetooth"></ion-icon></div>
+                </button>
+                <ion-item-options side="left">
+                        <button ion-button (click)="removeFromFavorites(device)">Remove</button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>  -->
+    </div>
+
+    <!--<button (click)="Test()">Test</button>
+        <div *ngFor="let vall of testValArra">
+         <h3>{{vall}}</h3>
+        </div>-->
+</ion-content>
+
+<ion-footer padding>
+    <button ion-button block (click)="IOOverviewMokDataConnect()">I/O overview</button>
+</ion-footer>

@@ -1,0 +1,142 @@
+<!--
+  Generated template for the DeviceSetupPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+    <ion-navbar hideBackButton="true">
+        <ion-grid no-padding>
+            <ion-row no-padding class="align-center">
+                <ion-col no-padding col-auto>
+                    <button ion-buttons no-padding class="icon button-custom ion-navicon" start>
+          <ion-icon large name="ios-arrow-round-back-outline"  (tap)="back()" ></ion-icon>
+          </button>
+                </ion-col>
+                <ion-col class="align-center">
+                    <div no-margin>
+                        <h5 no-margin>
+                            Device Setup
+                        </h5>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
+</ion-header> -->
+
+
+<!-- <ion-header>
+    <ion-navbar hideBackButton="true">
+        <ion-grid no-padding>
+            <ion-row no-padding class="align-center">
+                <ion-col no-padding col-auto>
+                    <button ion-buttons no-padding class="icon button-custom ion-navicon" start>
+                        <ion-icon large name="ios-arrow-round-back-outline" (tap)="back()"></ion-icon>
+                    </button>
+
+                </ion-col>
+                <ion-col class="align-center">
+                    <div no-margin>
+                        <h5 no-margin> Device setup
+                        </h5>
+                    </div>
+
+                </ion-col>
+                <button ion-buttons small class="icon settings-style ion-navicon" start>
+                    <ion-icon large name="ios-settings-outline" (tap)=" navigateToSettings()"></ion-icon>
+                </button>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
+</ion-header> -->
+
+<ion-header>
+        <ion-navbar hideBackButton="true" class="header-nav-style">
+            <ion-grid no-padding>
+                <ion-row no-padding class="align-center">
+                    <ion-col no-padding col-auto>
+                        <button ion-buttons no-padding class="icon button-custom ion-navicon" start>
+                            <ion-icon large name="ios-arrow-round-back-outline" (tap)="back()"></ion-icon>
+                        </button>
+                    </ion-col>
+                    <ion-col class="align-center">
+                        <div no-margin>
+                            <h5 no-margin>
+                                {{headerLabel}}
+                            </h5>
+                        </div>
+                    </ion-col>
+                    <button ion-buttons no-padding class="icon button-custom-inverted small">
+                        <ion-icon *ngIf="true" name="settings" (tap)="navigateToSettings()"></ion-icon>
+                    </button>
+                </ion-row>
+            </ion-grid>
+        </ion-navbar>
+    </ion-header>
+
+<ion-content overflow-scroll="false">
+    <ion-card padding>
+        <ion-card-header no-padding>
+            <strong>Setup:</strong>
+        </ion-card-header>
+        <hr size="4px" />
+        <div>
+            <button ion-button padding block (tap)="navigateToIOSetup()">I/O setup</button>
+            <button ion-button padding block (tap)="launchRampSetupPage()">Ramp setup</button>
+            <button ion-button padding block (tap)="launchPumpSetupPage()">Pump setup</button>
+            <button ion-button padding block (tap)="launchSwashAngleSetupPage()">Swash angle setup</button>
+            <button ion-button padding block (tap)="GoToRegularSetupPage()">Pressure regulator setup</button>
+
+        </div>
+    </ion-card>
+
+    <!-- <ion-card padding *ngIf="showOrHideConnectorSetupList()"> -->
+    <ion-card padding>
+        <ion-card-header no-padding>
+            <strong>Assigned connectors: {{ connectorUIList.length }} </strong>
+            <ion-spinner *ngIf="checkIfLoading()" style="float: right;" icon="ios-small"></ion-spinner>
+            <!-- <ion-icon style="float: right;" (click)="readConnectorParameter()" name="refresh"> 
+            </ion-icon>-->
+        </ion-card-header>
+        <!-- <hr size="4px" />
+        <button ion-button padding block (tap)="readConnectorParameter()">Refresh list</button> -->
+        <hr size="4px" />
+        <ion-list>
+            <button ion-item *ngFor="let item of connectorUIList" (click)="navigateToConnectorParameterPage(item)">
+                <!--{{ item.pid }} {{ item.connectorname }} channel:{{ item.channel }} value: {{ item.value }}-->
+                <strong>{{ item.connector }}</strong> {{ item.pinNum }} - {{ item.pinValue }} - {{ item.setupDetail }}
+            </button>   
+        </ion-list>
+    </ion-card>
+    
+    <ion-card padding class="card-margin">
+        <ion-card-header no-padding>
+            <strong>Others:</strong>
+        </ion-card-header>
+        <hr size="4px" />
+        <div>
+            <ion-row>
+                <ion-col>
+                    <button ion-button padding block text-wrap (tap)="factoryResetButtonClick()">Factory reset</button>
+                </ion-col>
+            </ion-row>
+            <!-- <ion-row>
+                <ion-col col-6>
+                    <button ion-button padding block text-wrap (tap)="writeCorrectPasswordTestData()">write Correct Password </button>
+                </ion-col>
+                <ion-col col-6>
+                    <button ion-button padding block text-wrap (tap)="writIncorrectPasswordTestData()">write Inorrect Password </button>
+                </ion-col>
+            </ion-row> -->
+            <ion-row>
+                <ion-col col-6><button ion-button padding block text-wrap (tap)="saveToEepromButtonClick()">Save to<br/>EEPROM</button></ion-col>
+                <ion-col col-6><button ion-button padding block text-wrap (tap)="loadFromEepromButtonClick()">Load from<br/>EEPROM</button></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-6><button ion-button padding block text-wrap (tap)="savetoFilePlatformSpecific()">Save to<br/>file</button></ion-col>
+                <ion-col col-6><button ion-button padding block text-wrap (tap)="LoadFile()">Load from<br/>file</button></ion-col>
+            </ion-row>
+        </div>
+    </ion-card>
+</ion-content>
