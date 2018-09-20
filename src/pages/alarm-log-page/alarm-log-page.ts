@@ -273,6 +273,7 @@ export class AlarmLogPage {
           });
         } else {
           console.log(Constants.messages.alarmsListMapSelectedValuesListnull);
+          console.log("error on alarmlist");
         }
 
 
