@@ -37,9 +37,10 @@ export class ScanDevicePage {
   deviceObject: DeviceModel;
   characteristics;
   characteristicIDToUse = Constants.values.characteristicIDToUse;
+  characteristicIDToUseList = Constants.values.characteristicIDToUseList;
   serviceUUID;
   characteristicId_;
-  isChracteristicExist_v;
+  isCharacteristicExist_v;
   intervalId;
 
   //test 
@@ -430,8 +431,9 @@ asHexString(i) {
       this.characteristics = deviceData.characteristics;
 
       console.log("characteristics: " + this.characteristics);
-      this.isChracteristicExist_v = this.isCharacteristicExist();
-      if (!this.isChracteristicExist_v) {
+      this.isCharacteristicExist_v = this.isCharacteristicExist();
+      //this.isCharacteristicExist_v = true;
+      if (!this.isCharacteristicExist_v) {
         console.log(Constants.messages.characteristicNotFound);
         this.utilsService.hideLoading();
         this.disconnectBle(device.id);
@@ -623,11 +625,20 @@ asHexString(i) {
   isCharacteristicExist() {
     var isExist = false;
     this.characteristics.forEach(element => {
-      if (element.characteristic.toUpperCase() == this.characteristicIDToUse.toUpperCase()) {
-        this.serviceUUID = element.service;
-        console.log("isCharacteristicExist serviceUUID " + this.serviceUUID);
-        isExist = true;
-      }
+
+      this.characteristicIDToUseList.forEach(uuid => {
+        if (element.characteristic.toUpperCase() == uuid.toUpperCase()) {
+          this.serviceUUID = element.service;
+          console.log("isCharacteristicExist serviceUUID " + this.serviceUUID);
+          this.characteristicIDToUse = uuid.toUpperCase();
+          isExist = true;
+        }
+      });
+      // if (element.characteristic.toUpperCase() == this.characteristicIDToUse.toUpperCase()) {
+      //   this.serviceUUID = element.service;
+      //   console.log("isCharacteristicExist serviceUUID " + this.serviceUUID);
+      //   isExist = true;
+      // }
     });
     return isExist;
   }

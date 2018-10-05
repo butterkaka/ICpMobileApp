@@ -22,4 +22,16 @@ page-device-main-page {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }
+
+    .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end]{
+        margin:0;
+    }
+
+    .item-md.item-block .item-inner{
+        padding: 0;
+    }
+
+    .button{
+        margin-right: 0px !important;
+    }
 }

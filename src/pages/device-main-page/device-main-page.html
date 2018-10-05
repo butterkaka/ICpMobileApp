@@ -56,12 +56,16 @@
         <ion-card-header no-padding>
             <ion-item no-padding>
                 <span item-left>
-                    <h1><strong>{{deviceName}}</strong>
-                    </h1>
+                    <h1><strong>{{deviceName}}</strong></h1>
+                </span>
+            </ion-item>
+            <ion-item no-padding>
+                <span item-left>
+                    <!-- <h1><strong>{{deviceName}}</strong></h1> -->
                     <span><small>Firmware version:{{firmwareVersion}}</small></span>
                 </span>
                 <span item-right>
-                    <button item-right no-margin small ion-button (tap)="blinkToggle()"> <label>{{blinkToggleName}}</label></button>
+                    <button small ion-button (tap)="blinkToggle()"> <label>{{blinkToggleName}}</label></button>
                 </span>
             </ion-item>
         </ion-card-header>

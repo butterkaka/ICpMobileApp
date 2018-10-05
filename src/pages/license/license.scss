@@ -2,22 +2,24 @@ page-license {
     .accordion-list {
         background: color($colors, light);
         height: 100%;
+        margin-top: 35px;
     }
     .section {
         background: #fff;
         color: #000;
-        margin-bottom: 4px;
+        // margin-bottom: 4px;
     }
     .section-active {
         background: #ffc400;
         background: #cfdde7;
+        background: #EAEAEA;
         color: #fff;
         color: #1f3044;
     }
     .child {
         background: #e8e7e6;
         color: #000;
-        margin-bottom: 4px;
+        // margin-bottom: 4px;
     }
     .child-item {
         background: #f3f2f1;
@@ -124,4 +126,18 @@ page-license {
     .disable {
         pointer-events: none;
     }
+
+
+    .list-header-mb{
+        margin-bottom: 0;
+    }
+
+    .item-mb-2{
+        background-color: #F3F2F1 !important;
+    }
+
+    .btn-inactive{
+        border-bottom: 1px solid #dedede;
+    }
+
 }

@@ -56,24 +56,23 @@
 <ion-content>
     <ion-list class="accordion-list">
         <!-- First Level -->
-        <ion-list-header *ngFor="let item of information; let i = index" no-lines no-padding>
+        <ion-list-header class="item-mb-2" *ngFor="let item of information; let i = index" no-lines no-padding>
             <!-- Toggle Button -->
-        <button ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
-        <ion-icon item-right name="arrow-down" *ngIf="!item.open"></ion-icon>
-        <ion-icon item-right name="arrow-up" *ngIf="item.open"></ion-icon>
-          {{ item.name }}
-      </button>
+            <button class="btn-inactive" ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
+                <ion-icon item-right name="arrow-down" *ngIf="!item.open"></ion-icon>
+                <ion-icon item-right name="arrow-up" *ngIf="item.open"></ion-icon>
+                {{ item.name }}
+            </button>
 
             <ion-list *ngIf="item.childItems && item.open" no-lines>
                 <!-- Second Level -->
                 <ion-list-header *ngFor="let child of item.childItems; let j = index" no-padding>
                     <!-- Toggle Button -->
-                    <button ion-item (click)="toggleItem(i, j)" *ngIf="child.childItems" class="child" detail-none>
-            <ion-icon item-left name="add" *ngIf="!child.open"></ion-icon>
-            <ion-icon item-left name="close" *ngIf="child.open"></ion-icon>
-            {{ child.name }}
-          </button>
-
+                <button ion-item (click)="toggleItem(i, j)" *ngIf="child.childItems" class="child" detail-none>
+                    <ion-icon item-left name="add" *ngIf="!child.open"></ion-icon>
+                    <ion-icon item-left name="close" *ngIf="child.open"></ion-icon>
+                    {{ child.name }}
+                </button>
                     <!-- Direct Add Button as Fallback -->
                     <ion-item *ngIf="!child.childItems" no-padding detail-none class="child-item" text-wrap>
                         <ion-grid>
@@ -86,7 +85,8 @@
                                 </ion-col>
                             </ion-row>
                             <ion-row>
-                                <p text-lowercase>{{ child.link }}</p>
+                                <a text-lowercase href="{{ child.link }}" target="_blank">{{ child.link }}</a>
+                                <!-- <p text-lowercase>{{ child.link }}</p> -->
                             </ion-row>
                         </ion-grid>
                     </ion-item>

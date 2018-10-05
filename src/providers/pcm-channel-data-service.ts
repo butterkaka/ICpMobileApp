@@ -1223,9 +1223,9 @@ export class PCMChannelDataService {
         "link": "https://www.npmjs.org/package/cordova-common"
       },
       {
-        "name": "cordova-email-plugin",
+        "name": "cordova-email-composer",
         "version": "Unspecified",
-        "link": "https://github.com/hypery2k/cordova-emailplugin"
+        "link": "https://github.com/katzer/cordova-plugin-email-composer"
       },
       {
         "name": "cordova-lib",
@@ -1234,12 +1234,12 @@ export class PCMChannelDataService {
       },
       {
         "name": "cordova-plugin-ble-central",
-        "version": "1.1.4",
+        "version": "1.2.2",
         "link": "https://www.npmjs.org/package/cordova-plugin-ble-central"
       },
       {
         "name": "cordova-plugin-compat",
-        "version": "1.0.0",
+        "version": "1.2.0",
         "link": "https://www.npmjs.org/package/cordova-plugin-compat"
       },
       {
@@ -1249,37 +1249,37 @@ export class PCMChannelDataService {
       },
       {
         "name": "cordova-plugin-device",
-        "version": "1.1.4",
+        "version": "2.0.2",
         "link": "http://github.com/apache/cordova-plugin-device/"
       },
       {
         "name": "cordova-plugin-file",
-        "version": "Unspecified",
+        "version": "6.0.1",
         "link": "https://www.npmjs.org/package/cordova-plugin-file"
       },
       {
         "name": "cordova-plugin-filechooser",
-        "version": "Unspecified",
+        "version": "1.0.1",
         "link": "https://github.com/don/cordova-filechooser"
       },
       {
         "name": "cordova-plugin-filepath",
-        "version": "Unspecified",
+        "version": "1.4.2",
         "link": "https://www.npmjs.org/package/cordova-plugin-filepath"
       },
       {
         "name": "cordova-plugin-splashscreen",
-        "version": "4.0.3",
+        "version": "5.0.2",
         "link": "http://github.com/apache/cordova-plugin-splashscreen/"
       },
       {
         "name": "cordova-plugin-statusbar",
-        "version": "Unspecified",
+        "version": "2.4.2",
         "link": "https://www.npmjs.org/package/cordova-plugin-statusbar"
       },
       {
         "name": "cordova-plugin-whitelist",
-        "version": "Unspecified",
+        "version": "1.3.3",
         "link": "https://www.npmjs.org/package/cordova-plugin-whitelist"
       },
       {

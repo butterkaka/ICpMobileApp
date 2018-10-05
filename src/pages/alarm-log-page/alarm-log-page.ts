@@ -217,7 +217,6 @@ export class AlarmLogPage {
           } if (element.channel == Constants.channels.alarmCommunucationChannel && element.subChannel == Constants.channels.tempWarningsLogSubchannel) {
             this.tempWarningMessageLogList = this.constructAlarmsandLogListAndShowInUI(valueList, Constants.values.TempWarningsLog);
           }
-
           if (element.channel == Constants.channels.alarmCommunucationChannel && element.subChannel == Constants.channels.alarmsExtendedSubchannel) {
             this.alarmsExtendedMessageList = this.constructAlarmsandLogListAndShowInUI(valueList, Constants.values.AlarmsExtended);
           }
