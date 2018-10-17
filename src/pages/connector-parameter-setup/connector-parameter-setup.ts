@@ -1032,6 +1032,7 @@ export class ConnectorParameterSetupPage {
  */
   calibrateConnecterSetupPinParameters() {
     // To prevent write without password 
+    this.isCalibratingModalOpen = false;
     if (this.pcmchanneldataservice.passwordFlag) {
       this.calibrationCount = 0;
 
@@ -1043,7 +1044,6 @@ export class ConnectorParameterSetupPage {
       }
       console.log(this.calibrationVal.name);
       // this.calibrateTo4Ma();
-      //this.calibrationCount++;
       this.calibrateDevice(this.calibrationVal.values[0]);
       //this.calibrationCount++;
 
@@ -1063,6 +1063,7 @@ export class ConnectorParameterSetupPage {
         {
           text: Constants.messages.ok,
           handler: data => {
+            this.calibrationCount++;
             this.writeCalibrationData(Value);
             this.isCalibratingModalOpen = false;
           }
@@ -1077,6 +1078,7 @@ export class ConnectorParameterSetupPage {
         }
       ]
     });
+    this.utilsService.sleep(500);
     this.isCalibratingModalOpen = true;
     this.pcmchanneldataservice.alert.present();
 
@@ -1087,6 +1089,7 @@ export class ConnectorParameterSetupPage {
   @param value32 - the value to be written onto the device
   */
   async writeCalibrationData(value32) {
+    this.utilsService.presentLoading("Saving to device");
     this.operation = Constants.values.calibrate;
     this.atmQuestionObjectList = [];
     this.countAtmQList = 0;
@@ -1099,33 +1102,56 @@ export class ConnectorParameterSetupPage {
     let val2 = (value32 & 0x0000ff00) >> 8;
     let val1 = (value32 & 0x000000ff);
     var byteArray = new Uint8Array([this.calibrationVal.wType, 0, this.calibrationVal.channel, this.calibrationVal.subchannel, val1, val2, val3, val4]);
-    await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,100);
+    await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,500);
+    this.utilsService.hideLoading();
   }
 
   /** 
  * This is used to check the write calibration status of the parameters.  
  */
   checkCalibrateStatus() {
-    this.atmQuestionObjectList.forEach(element => {
-      // element.status = 0; // Testing
+    for(let element of this.atmQuestionObjectList){
       if (element.status != 0) {
         if (element.channel == this.calibrationVal.channel && element.subChannel == this.calibrationVal.subchannel) {
           //this.showAlert(Constants.messages.calibrationErrorStatus, element.status);
+          console.log(Constants.messages.calibrationErrorStatus + " " + element.status);
         }
       }
       else {
         if (this.calibrationCount < this.calibrationVal.values.length && !this.isCalibratingModalOpen) {
           this.calibrateDevice(this.calibrationVal.values[this.calibrationCount]);
-          this.calibrationCount++;
+          //this.calibrationCount++;
         }
-        if (this.calibrationCount == this.calibrationVal.values.length) {
-          this.calibrationCount = 0;
+        if (this.calibrationCount == this.calibrationVal.values.length && !this.isCalibratingModalOpen) {
           console.log("out of loop");
           this.showAlert(Constants.messages.calibrationSuccessfull,"");
-          this.isCalibratingModalOpen = false;
+          this.isCalibratingModalOpen = true;
+          //this.calibrationCount = 0;
         }
       }
-    });
+    }
+
+
+    // this.atmQuestionObjectList.forEach(element => {
+    //   // element.status = 0; // Testing
+    //   if (element.status != 0) {
+    //     if (element.channel == this.calibrationVal.channel && element.subChannel == this.calibrationVal.subchannel) {
+    //       //this.showAlert(Constants.messages.calibrationErrorStatus, element.status);
+    //     }
+    //   }
+    //   else {
+    //     if (this.calibrationCount < this.calibrationVal.values.length && !this.isCalibratingModalOpen) {
+    //       this.calibrateDevice(this.calibrationVal.values[this.calibrationCount]);
+    //       //this.calibrationCount++;
+    //     }
+    //     if (this.calibrationCount == this.calibrationVal.values.length) {
+    //       console.log("out of loop");
+    //       this.showAlert(Constants.messages.calibrationSuccessfull,"");
+    //       this.isCalibratingModalOpen = false;
+    //       //this.calibrationCount = 0;
+    //     }
+    //   }
+    // });
 
   }
 
@@ -1157,6 +1183,13 @@ export class ConnectorParameterSetupPage {
       animation: {
         duration: 0
       },
+      // scales: {
+      //   yAxes: [{
+      //     ticks: {
+      //       stepSize: 1
+      //     }
+      //   }],
+      // },
       // scales: {
       //   yAxes: [{
       //     ticks: {
