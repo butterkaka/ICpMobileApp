@@ -20,7 +20,7 @@
 .full-image {
     overflow: hidden;
     height: inherit;
-    object-fit: cover;
+    object-fit:contain;
 }
 
 .outer-img {

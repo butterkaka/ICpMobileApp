@@ -394,7 +394,7 @@ export class ConnectorParameterSetupPage {
 
       for(let element of connectorParamterSetupValuesList){
         var byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
-        await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
+        await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,500);
         //this.utilsService.writeToDeviceWithSleep(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer, 150);
       }
 
@@ -769,7 +769,7 @@ export class ConnectorParameterSetupPage {
         } if (element.channel == this.channel && element.subChannel == Constants.channels.warnMaxSubchannel) {
           this.warningMax = element.value32Bit1 / 1000;
         } if (element.channel == this.channel && element.subChannel == Constants.channels.invertedSubchannel) {
-          this.invertedDigital = element.value32Bit1 / 1000;
+          this.invertedDigital = element.value32Bit1;
           console.log("this.invertedDigital setParameterValuesToUI" + this.invertedDigital);
         }
         //this.cd.detectChanges();
