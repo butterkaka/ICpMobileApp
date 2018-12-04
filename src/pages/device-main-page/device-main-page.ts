@@ -9,6 +9,7 @@ import { Constants } from '../../shared/app.constant';
 import { Storage } from '@ionic/storage';
 import { Idle } from '@ng-idle/core';
 import { LiveGraphPage } from './../live-graph-page/live-graph-page';
+import { UtilsService } from '../../shared/utilsService';
 // import { Keepalive } from '@ng-idle/keepalive';
 
 /**
@@ -20,6 +21,7 @@ import { LiveGraphPage } from './../live-graph-page/live-graph-page';
 @Component({
   selector: 'page-device-main-page',
   templateUrl: 'device-main-page.html',
+  providers: [UtilsService]
 })
 export class DeviceMainPage {
 
@@ -59,7 +61,7 @@ export class DeviceMainPage {
    */
   constructor(public navCtrl: NavController, public navParams: NavParams, private ble: BLE, public pcmChannelDataservice: PCMChannelDataService,
     public changeDetect: ChangeDetectorRef, private storage: Storage, public pcmchanneldataservice: PCMChannelDataService, public alertCtrl: AlertController,
-    private idle: Idle) {
+    private idle: Idle, public utilsService: UtilsService) {
     //this.deviceObject = navParams.get(Constants.values.deviceObject);
     this.deviceObject = this.pcmChannelDataservice.deviceObjectGlobal;
     this.deviceName = this.deviceObject.deviceName;
@@ -178,17 +180,22 @@ export class DeviceMainPage {
   }
 
 
-  readDeviceMainPageParameters() {
+  async readDeviceMainPageParameters() {
     this.operation = Constants.values.read;
     this.countAtmQList = 0;
 
     this.atmQuestionObjectList = [];
     let deviceParameterList = PCMChannelDataService.getInputDetailsDeviceMainPage();
 
-    deviceParameterList.forEach(element => {
+    for (let element of deviceParameterList) {
       var byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
-      this.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
-    });
+      await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,50);
+    }
+
+    // deviceParameterList.forEach(element => {
+    //   var byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
+    //   this.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
+    // });
   }
 
   /** 
@@ -412,7 +419,7 @@ export class DeviceMainPage {
       console.log(this.isFlashing);
     } else {
       subChannel = 1;
-      var byteArray = new Uint8Array([wType, 0, channel, subChannel, 0, 0]);
+      byteArray = new Uint8Array([wType, 0, channel, subChannel, 0, 0]);
       this.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
       isFinished = true;
     }

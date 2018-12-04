@@ -1202,7 +1202,7 @@ export class PCMChannelDataService {
 
     "items": [{
       "name": "Apache license 2.0",
-      "children": [{
+      "childItems": [{
         "name": "Android SDK Support Libraries",
         "version": "Unspecified",
         "link": "https://developer.android.com/tools/support-library/index.html"

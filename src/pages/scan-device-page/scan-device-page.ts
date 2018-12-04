@@ -43,17 +43,11 @@ export class ScanDevicePage {
   isCharacteristicExist_v;
   intervalId;
 
-  //test 
-  value32test;
-  testValArra;
-
   atmQuestionObjectList: Array<AtmQuestionTypeModel>;
   countAtmQList = 0;
   operation;
 
   atmAuthenticationTypeObject: AtmAuthenticationTypeModel;
-
-
 
   /**
  * ScanDevicePage Constructor.
@@ -386,13 +380,6 @@ asHexString(i) {
     this.storage.set("favorites", this.favorites);
   }
 
-  startReadWithInterval(count:number = 0){
-    count = Math.abs(count);
-    let infinite = count == 0 ? true : false;
-
-
-  }
-
   /** 
   * This is used to scan the near by devices.
   * @param {JSON} device - The device object has the device details
@@ -696,11 +683,6 @@ asHexString(i) {
   */
   gotoIOSetupPageMock() {
     this.navCtrl.push(IOSetupPage, { deviceObject: this.deviceObject, ioSetupHeader: Constants.values.ioOverview });
-  }
-
-
-  sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   /** 
