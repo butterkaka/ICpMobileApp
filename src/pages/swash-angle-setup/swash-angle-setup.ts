@@ -549,11 +549,15 @@ export class SwashAngleSetupPage {
       inputs: [
         {
           name: Constants.messages.value,
-          placeholder: Constants.messages.enter + item.name + ' ' + Constants.messages.value,
-          type: 'number'
+          placeholder: item.Value,  //Constants.messages.enter + item.name + ' ' + Constants.messages.value,
+          type: 'number',
+          value:item.Value
         }
       ],
       buttons: [
+        {
+          text: Constants.messages.cancel
+        },
         {
           text: Constants.messages.apply,
           handler: data => {
@@ -566,9 +570,6 @@ export class SwashAngleSetupPage {
             }
             this.cd.detectChanges();
           }
-        },
-        {
-          text: Constants.messages.cancel
         }
       ]
     });

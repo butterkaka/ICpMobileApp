@@ -1,4 +1,4 @@
- import { LicensePage } from './../pages/license/license';
+import { LicensePage } from './../pages/license/license';
 
 import { PumpSetupPage } from './../pages/pump-setup-page/pump-setup-page';
 import { DeviceSetupPage } from './../pages/device-setup-page/device-setup-page';

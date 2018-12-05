@@ -436,11 +436,15 @@ export class RampSetupPage {
         inputs: [
           {
             name: Constants.messages.value,
-            placeholder: Constants.messages.enter + item.Title + ' ' + Constants.messages.value,
-            type: 'number'
+            placeholder: item.Value,  //Constants.messages.enter + item.name + ' ' + Constants.messages.value,
+            type: 'number',
+            value:item.Value
           }
         ],
         buttons: [
+          {
+            text: Constants.messages.cancel
+          },
           {
             text: Constants.messages.apply,
             handler: data => {
@@ -454,9 +458,6 @@ export class RampSetupPage {
               }
               this.cd.detectChanges();
             }
-          },
-          {
-            text: Constants.messages.cancel
           }
         ]
       });

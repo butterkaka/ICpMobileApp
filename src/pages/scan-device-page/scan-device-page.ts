@@ -505,6 +505,21 @@ asHexString(i) {
       ],
       buttons: [
         {
+          text: Constants.messages.cancel,
+          handler: data => {
+            this.pcmchanneldataservice.passwordPromt = false;
+        
+            clearInterval(this.intervalId);
+  
+            try {
+              this.disconnectBle(this.pcmchanneldataservice.deviceIdGlobal);
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
+  
+          }
+        },
+        {
           text: Constants.messages.apply,
           handler: data => {
             this.pcmchanneldataservice.passwordPromt = false;
@@ -515,25 +530,11 @@ asHexString(i) {
             } 
 
           }
-        },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-            this.pcmchanneldataservice.passwordPromt = false;
-        
-            clearInterval(this.intervalId);
-
-            try {
-              this.disconnectBle(this.pcmchanneldataservice.deviceIdGlobal);
-            } catch (error) {
-              console.log(JSON.stringify(error));
-            }
-
-          }
-
         }
       ]
     });
+
+
     this.pcmchanneldataservice.alert.present();
 
   }
