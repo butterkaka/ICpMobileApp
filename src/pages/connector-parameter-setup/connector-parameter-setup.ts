@@ -165,6 +165,9 @@ export class ConnectorParameterSetupPage {
 
     //console.log(this.connectorPinType);
 
+
+    // removed graph from page 20181206
+    this.graphHideFlag = true;
     const done = new Promise((resolve, reject) =>{
       this.initializeStartNotify();
       // this.setSavedDisplaySiValue();
@@ -177,17 +180,10 @@ export class ConnectorParameterSetupPage {
 
     done.then(()=>{
         this.utilsService.hideLoading();
-        this.startGraphUpdate();
-        this.addGraph();
+        // this.startGraphUpdate();
+        // this.addGraph();
       }
     );
-
-    // setTimeout(()=> {
-    //   this.startGraphUpdate();
-    //   this.addGraph();
-    // }, 100);
-
-    // this.SetTimeoutForViewUpdate();
   }
 
   // setSavedDisplaySiValue() {
@@ -224,10 +220,7 @@ export class ConnectorParameterSetupPage {
     setTimeout(() => {
       this.cd.detectChanges();
       console.log('SetTimeoutForViewUpdate');
-    }, 300);
-    //  setTimeout(() => {
-    //   this.cd.detectChanges();
-    // },400);   
+    }, 300);  
   }
 
   /** 

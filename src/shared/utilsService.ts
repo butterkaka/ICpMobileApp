@@ -15,18 +15,15 @@ export class UtilsService {
                   content: text,
                   duration:5000
             });
-
             this._loader.onDidDismiss(() => {
                   console.log('Dismissed loading');
             });
-
             this._loader.present();
       }
 
       hideLoading() {
             this._loader.dismiss();
       }
-
 
       back() {
             this.navController.pop();

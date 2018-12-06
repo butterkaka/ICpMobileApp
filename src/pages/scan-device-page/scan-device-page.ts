@@ -72,7 +72,7 @@ export class ScanDevicePage {
   }
 
   /** 
-  * This is the enable the bluwtooth - works only in Android
+  * This is the enable the bluetooth - works only in Android
   */
   enableBluetooth() {
     this.ble.enable().then(() => {
@@ -285,7 +285,6 @@ parseAdvertisingData(buffer) {
 
 asHexString(i) {
   var hex;
-
   hex = i.toString(16);
 
   // zero padding

@@ -1,7 +1,7 @@
 import { ScanDevicePage } from './../pages/scan-device-page/scan-device-page';
 import { DeviceSetupPage } from './../pages/device-setup-page/device-setup-page';
 import { Component } from '@angular/core';
-import { Nav, Platform, App, AlertController} from 'ionic-angular';
+import { Nav, Platform, App, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PCMChannelDataService } from '../providers/pcm-channel-data-service'
@@ -49,41 +49,60 @@ export class MyApp {
       platform.pause.subscribe(() => {
         console.log('[INFO] App paused');
         if (!(this.app.getActiveNav().getActive().instance instanceof ScanDevicePage)) {
-          if(this.pcmchannelservice.appResetFlag)
-          {
-            this.idle.stop(); 
-            this.ble.isConnected(this.pcmchannelservice.deviceIdGlobal).then(() => this.ble.disconnect(pcmchannelservice.deviceIdGlobal));
-            this.pcmchannelservice.loaderGlobal.dismiss();
-            // uncomment this to go to scan-page when returning from pause
-            this.app.getActiveNav().popToRoot();
-          }
+          // if(this.pcmchannelservice.appResetFlag)
+          // {
+          //   this.idle.stop(); 
+          //   this.ble.isConnected(this.pcmchannelservice.deviceIdGlobal).then(() => this.ble.disconnect(pcmchannelservice.deviceIdGlobal));
+          //   this.pcmchannelservice.loaderGlobal.dismiss();
+          //   // uncomment this to go to scan-page when returning from pause
+          //   this.app.getActiveNav().popToRoot();
+          // }
         }
       });
 
       platform.resume.subscribe(() => {
         console.log('[INFO] App resumed');
-        this.ble.isConnected(this.pcmchannelservice.deviceIdGlobal)
-        .then(() => { 
-            console.log("connected in resume");
-            if(this.pcmchannelservice.appResetFlag){
-              console.log("disconnecting in resume....");
-              this.disconnectBle();
-              this.app.getActiveNav().popToRoot();
-              this.pcmchannelservice.appResetFlag=true;
-              //this.pcmchannelservice.disconnectAfterResume=true;
-            }
-          },
-          () => { 
-            console.log("disconnected in resume");
+
+        this.ble.isEnabled().then(data => {
+
+          this.ble.isConnected(this.pcmchannelservice.deviceIdGlobal)
+          .then(() => { 
+              console.log("connected in resume");
+                //this.pcmchannelservice.disconnectAfterResume=true;
+              },
+              () => { 
+                this.app.getActiveNav().popToRoot();
+              });
+          }).catch(error => {
+            console.log(JSON.stringify(error));
             this.app.getActiveNav().popToRoot();
-          }
-        );
+        });
+
+        // this.ble.isConnected(this.pcmchannelservice.deviceIdGlobal)
+        // .then(() => { 
+        //     console.log("connected in resume");
+        //     if(this.pcmchannelservice.appResetFlag){
+        //       console.log("disconnecting in resume....");
+        //       this.disconnectBle();
+        //       this.app.getActiveNav().popToRoot();
+        //       this.pcmchannelservice.appResetFlag=true;
+        //       //this.pcmchannelservice.disconnectAfterResume=true;
+        //     }
+        //   },
+        //   () => { 
+        //     console.log("disconnected in resume");
+        //     this.app.getActiveNav().popToRoot();
+        //   }
+        // );
+
+
         //this.pcmchannelservice.appResetFlag=true;
         //this.pcmchannelservice.disconnectAfterResume=true;
       });
 
       this.idle.setIdle(8);
       this.idle.setTimeout(15*60); //15 minutes timeout
+      // this.idle.setTimeout(1 * 60); //15 minutes timeout
       this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
       this.idle.onIdleEnd.subscribe(() =>
@@ -95,13 +114,17 @@ export class MyApp {
         this.app.getActiveNav().popToRoot();
 
       });
-      
-      this.idle.onIdleStart.subscribe(() =>
-        console.log('You\'ve gone idle!'))
-        ;
-      this.idle.onTimeoutWarning.subscribe((countdown) =>
-        console.log('You will time out in ' + countdown + ' seconds!')
-      );
+
+      this.idle.onIdleStart.subscribe(() => console.log(`You've gone idle!`));
+      this.idle.onTimeoutWarning.subscribe((countdown) => {
+        console.log(`You will time out in ${countdown} seconds!`);
+        this.ble.isEnabled().then(data => {
+          console.log(JSON.stringify(data));
+        }).catch(error => {
+          console.log(JSON.stringify(error));
+          this.app.getActiveNav().popToRoot();
+        });
+      });
 
       platform.registerBackButtonAction(() => {
 

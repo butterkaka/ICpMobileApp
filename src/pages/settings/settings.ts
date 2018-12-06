@@ -108,6 +108,10 @@ export class SettingsPage {
         ],
         buttons: [
           {
+            text: Constants.messages.cancel,
+
+          },
+          {
             text: Constants.messages.apply,
             handler: data => {
 
@@ -120,10 +124,6 @@ export class SettingsPage {
 
             }
           },
-          {
-            text: Constants.messages.cancel,
-
-          }
         ]
       });
       this.pcmchanneldataservice.alert.present();
@@ -270,6 +270,15 @@ export class SettingsPage {
 
       buttons: [
         {
+          text: Constants.messages.cancel,
+          handler: data => {
+            try {
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
+          }
+        },
+        {
           text: Constants.messages.apply,
           handler: data => {
             try {
@@ -279,15 +288,6 @@ export class SettingsPage {
               console.log(JSON.stringify(error));
             }
 
-          }
-        },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-            try {
-            } catch (error) {
-              console.log(JSON.stringify(error));
-            }
           }
         }
       ]
@@ -313,18 +313,6 @@ export class SettingsPage {
       ],
       buttons: [
         {
-          text: Constants.messages.apply,
-          handler: data => {
-            try {
-              this.blePasswordTRelatedCalls(data.value, Constants.values.authenticate, 8);
-              this.pcmchanneldataservice.passwordString = data.value;
-            } catch (error) {
-              console.log(JSON.stringify(error));
-            }
-
-          }
-        },
-        {
           text: Constants.messages.cancel,
           handler: data => {
 
@@ -335,7 +323,18 @@ export class SettingsPage {
             }
 
           }
+        },
+        {
+          text: Constants.messages.apply,
+          handler: data => {
+            try {
+              this.blePasswordTRelatedCalls(data.value, Constants.values.authenticate, 8);
+              this.pcmchanneldataservice.passwordString = data.value;
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
 
+          }
         }
       ]
     });
@@ -396,6 +395,9 @@ export class SettingsPage {
         ],
         buttons: [
           {
+            text: Constants.messages.cancel,
+          },
+          {
             text: Constants.messages.apply,
             handler: data => {
               try {
@@ -406,10 +408,6 @@ export class SettingsPage {
               }
 
             }
-          },
-          {
-            text: Constants.messages.cancel,
-
           }
         ]
       });
