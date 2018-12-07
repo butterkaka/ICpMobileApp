@@ -1,7 +1,7 @@
 import { Constants } from './../../shared/app.constant';
 import { Chart } from 'chart.js';
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, Item } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { PCMChannelDataService } from '../../providers/pcm-channel-data-service'
 import { DeviceModel, AtmQuestionTypeModel } from '../../Models/ExportModelClass';
@@ -99,6 +99,7 @@ export class LiveTunePage {
   graphHeader = "";
   liveTuneGraphType: any;
   check = false;
+  valueChange: boolean = false;
   pPartValue: number = 0;
   iPartValue: number = 0;
   dPartValue: number = 0;
@@ -121,13 +122,10 @@ export class LiveTunePage {
   /** 
  * @event ionViewDidLoad PageLoad Event  
  */
-  ionViewDidLoad() {
-
-    //console.log('ionViewDidLoad LiveTunePage');
-
+  async ionViewDidLoad() {
     this.addGraph();
-    this.readLiveTuneParameters();
-    this.readLiveTuneGraphParameters();
+    await this.readLiveTuneParameters();
+    await this.readLiveTuneGraphParameters();
   }
 
   /** 
@@ -142,17 +140,13 @@ export class LiveTunePage {
       *This is to update the view 
       */
   setTimeoutForViewUpdate() {
-
     // workaround to update the view for asynchronous update / rareley it doesint update the view to make sure update works this will be called twice
     setTimeout(() => {
       this.cd.detectChanges();
     }, 200);
     setTimeout(() => {
       this.cd.detectChanges();
-    }, 300);
-    //  setTimeout(() => {
-    //   this.cd.detectChanges();
-    // },400);   
+    }, 300);  
   }
 
   /**
@@ -161,13 +155,11 @@ export class LiveTunePage {
   */
   ionViewWillLeave() {
     clearInterval(this.startUpdateId);
-
   }
 
   /**
-  * This  is used to add thegrph to the canvas
+  * This  is used to add the graph to the canvas
   */
-
   //Line tension - 0.4(Default) Bezier curve tension of the line. Set to 0 to draw straightlines. 
   addGraph() {
     var canvas = document.getElementById('myChart');
@@ -259,7 +251,7 @@ export class LiveTunePage {
    */
   startUpdate() {
     this.startUpdateId = setInterval(() => {
-      this.readLiveTuneParameters();
+      //this.readLiveTuneParameters();
       this.readLiveTuneGraphParameters();
       this.addData();
       // //console.log('started')
@@ -268,26 +260,21 @@ export class LiveTunePage {
   }
 
   /** 
-  * This is used to read the regulator setup paraemtrs from the device.  
+  * This is used to read the regulator setup parameters from the device.  
   */
   async readLiveTuneParameters() {
     this.operation = Constants.values.read;
     this.startNotify(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId);
     // workaround for notifier
     var byteArray = new Uint8Array([0, 0, 0, 0, 0, 0]);
-    this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,0);
+    this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,10);
 
     this.atmQuestionObjectList = [];
 
     for(let element of this.items){
       byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
-      await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,10);
+      await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
     }
-    // this.items.forEach(element => {
-    //   var byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
-    //   this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,50);
-    // });
-
   }
 
   /** 
@@ -298,17 +285,13 @@ export class LiveTunePage {
     this.startNotify(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId);
     // workaround for notifier
     var byteArray = new Uint8Array([0, 0, 0, 0, 0, 0]);
-    this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,0);
+    this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,10);
     this.atmQuestionObjectList = [];
 
     for(let element of this.graphItems){
       byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
-      await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,10);
+      await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
     }
-    // this.graphItems.forEach(element => {
-    //   var byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
-    //   this.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
-    // });
   }
 
   /** 
@@ -322,8 +305,11 @@ export class LiveTunePage {
       this.atmQuestionObjectList.push(new AtmQuestionTypeModel(new Uint8Array(buffer)));
       this.countAtmQList++;
       if (this.operation == Constants.values.read) { //&& this.countAtmQList > 2
-        this.SetParameterValuesToUI();
-        this.setItemValuesToUI();
+        this.setParameterValuesToUI();
+
+        // stop setting value to UI when user change value
+        if(!this.valueChange)
+          this.setItemValuesToUI();
         
       } else if (this.operation == Constants.values.write) { //&& this.countAtmQList > 3
         this.checkWriteStatus();
@@ -336,7 +322,7 @@ export class LiveTunePage {
   /** 
   * This is used to SetParameter  Values to the UI  
   */
-  SetParameterValuesToUI() {
+  setParameterValuesToUI() {
     this.atmQuestionObjectList.forEach(element => {
       try {
         if (element.channel == Constants.channels.standaloneSettingsChannel && element.subChannel == Constants.channels.setPointSubChannel) {
@@ -406,7 +392,6 @@ export class LiveTunePage {
   setItemValuesToUI() {
 
     if (this.check == false) {
-      // //console.log("Hello")
       this.items.forEach(element => {
         if (element.Title == Constants.values.pPartGain) {
           element.Value = this.pPartValue;
@@ -419,9 +404,6 @@ export class LiveTunePage {
         }
       });
     }
-
-
-
     this.cd.detectChanges();
   }
 
@@ -483,8 +465,6 @@ export class LiveTunePage {
       });
 
     this.check = false;
-
-
   }
 
 
@@ -501,13 +481,15 @@ export class LiveTunePage {
   * This is used for incrementing the value clicked
   * @param {JSON} item - selected item value from UI  
   */
-  increment(item) {
+  async increment(item) {
     if (item.Max > item.Value) {
       item.Value = item.Value + item.Steps;
       this.setItemValuesToSys(item);
-      this.writeLiveTuneParameters();
-    }
+      await this.writeLiveTuneParameters();
 
+      // only works when not in stop-mode
+      // await this.stepValue(item, true);
+    }
     else this.presentAlert(Constants.messages.maximumLimit, Constants.messages.maximumLimitReached);
 
     this.cd.detectChanges();
@@ -517,17 +499,46 @@ export class LiveTunePage {
     * This is used for decrementing the value clicked
     * @param {JSON} item - selected item value from UI  
     */
-  decrement(item) {
+  async decrement(item) {
     if (item.Min < item.Value) {
       item.Value = item.Value - item.Steps;
       this.setItemValuesToSys(item);
-      this.writeLiveTuneParameters();
+      // only works when not in stop-mode
+      // await this.stepValue(item, false);
+      await this.writeLiveTuneParameters();
     }
 
     else this.presentAlert(Constants.messages.minimumLimit, Constants.messages.minimumLimitReached);
 
     this.cd.detectChanges();
   }
+
+  async stepValue(item, up: boolean = true){
+    this.valueChange = true;
+    this.operation = Constants.values.write;
+    this.atmQuestionObjectList = [];
+    this.countAtmQList = 0;
+    this.setItemValuesToSys(item);
+    var liveTuneStepChannel = item.liveTuneStepChannel;
+    var liveTuneStepSubChannel = up ? item.liveTuneStepUpSubChannel : item.liveTuneStepDownSubChannel;
+
+    console.log(`wType:${item.wType} value:${item.Value} channel: ${liveTuneStepChannel} subchannel: ${liveTuneStepSubChannel}`);
+
+    let val1;
+    let val2;
+    let val3;
+    let val4;
+    let value32 = item.Value;
+
+    val4 = (value32 & 0xff000000) >> 24;
+    val3 = (value32 & 0x00ff0000) >> 16;
+    val2 = (value32 & 0x0000ff00) >> 8;
+    val1 = (value32 & 0x000000ff);
+
+    var byteArray = new Uint8Array([item.wType, 0, liveTuneStepChannel, liveTuneStepSubChannel, val1, val2, val3, val4]);
+    await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray, 50);
+  }
+
 
   /** 
   * This is used for incrementing the value clicked
@@ -547,6 +558,7 @@ export class LiveTunePage {
   * This is used to write the pump setup paraemtrs to the device.  
   */
   async writeLiveTuneParameters() {
+    this.valueChange = true;
     this.check = true;
     this.operation = Constants.values.write;
     this.atmQuestionObjectList = [];
@@ -557,9 +569,7 @@ export class LiveTunePage {
     let val4;
     let value32;
     let flag = 0;
-    var liveTuneInputList = JSON.parse(JSON.stringify(this.items));;
-
-
+    var liveTuneInputList = JSON.parse(JSON.stringify(this.items));
 
     for(let element of liveTuneInputList){
     //liveTuneInputList.forEach(element => {
@@ -590,8 +600,9 @@ export class LiveTunePage {
         }
 
       }
-    //});
     }
+
+    this.check = false;
   }
 
   /** 
@@ -599,8 +610,6 @@ export class LiveTunePage {
    * @param {JSON} item - 
    */
   setItemValuesToSys(element) {
-
-
     if (element.Title == Constants.values.pPartGain) {
       this.pPartValue = element.Value;
     }

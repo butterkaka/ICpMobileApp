@@ -166,8 +166,6 @@ export class ConnectorParameterSetupPage {
     //console.log(this.connectorPinType);
 
 
-    // removed graph from page 20181206
-    this.graphHideFlag = true;
     const done = new Promise((resolve, reject) =>{
       this.initializeStartNotify();
       // this.setSavedDisplaySiValue();
@@ -884,7 +882,7 @@ export class ConnectorParameterSetupPage {
         }
       }
       // Testing remove
-      else this.enterPaswordPrompt();
+      else this.enterPasswordPrompt();
     }
 
     this.utilsService.hideLoading();
@@ -988,10 +986,17 @@ export class ConnectorParameterSetupPage {
           {
             name: Constants.messages.value,
             placeholder: Constants.messages.enter + item.Title + ' ' + Constants.messages.value,
-            type: 'number'
+            type: 'number',
+            value: item.Value
           }
         ],
         buttons: [
+          {
+            text: Constants.messages.cancel,
+            handler: data => {
+              this.disabledTrue = true;
+            }
+          },
           {
             text: Constants.messages.apply,
             handler: data => {
@@ -1006,12 +1011,6 @@ export class ConnectorParameterSetupPage {
               }
               this.disabledTrue = true;
               this.cd.detectChanges();
-            }
-          },
-          {
-            text: Constants.messages.cancel,
-            handler: data => {
-              this.disabledTrue = true;
             }
           }
         ]
@@ -1054,20 +1053,19 @@ export class ConnectorParameterSetupPage {
       enableBackdropDismiss: false,
       buttons: [
         {
+          text: Constants.messages.cancel,
+          handler: data => {
+            this.isCalibratingModalOpen = false;
+            this.calibrationCount = 0;
+          }
+        },
+        {
           text: Constants.messages.ok,
           handler: data => {
             this.calibrationCount++;
             this.writeCalibrationData(Value);
             this.isCalibratingModalOpen = false;
           }
-        },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-            this.isCalibratingModalOpen = false;
-            this.calibrationCount = 0;
-          }
-
         }
       ]
     });
@@ -1517,6 +1515,16 @@ export class ConnectorParameterSetupPage {
       enableBackdropDismiss: false,
       buttons: [
         {
+          text: Constants.messages.cancel,
+          handler: data => {
+            console.log("Cancel previoussSensorUnit: ", this.previousSensorUnit, " previoussSensorUnit: ", this.sensorUnit)
+            this.sensorUnit = this.previousSensorUnit;
+            // this.setSavedDisplaySiValue()
+            this.setItemValuesToUI();
+          }
+  
+        },
+        {
           text: Constants.messages.ok,
           handler: data => {
             this.displayUnitDropdownList = PCMChannelDataService.getAnalogDisplayUnitDropdownList(this.sensorUnit);
@@ -1525,9 +1533,9 @@ export class ConnectorParameterSetupPage {
             this.previousSensorUnit = this.sensorUnit;
 
             this.revertBackToDeviceSiUnit()
-
+            
             if (this.sensorUnit >= Constants.values.CelsiusUnitValue && this.sensorUnit <= Constants.values.FahrenheitUnitValue) {
-
+              
               if (!(this.previousSensorUnit >= Constants.values.CelsiusUnitValue && this.previousSensorUnit <= Constants.values.FahrenheitUnitValue)) {
                 this.alarmMin = 0;
                 this.alarmMax = 0;
@@ -1563,19 +1571,7 @@ export class ConnectorParameterSetupPage {
             }
             this.sensorUnitCheck();
             this.setItemValuesToUI();
-
-
           }
-        },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-            console.log("Cancel previoussSensorUnit: ", this.previousSensorUnit, " previoussSensorUnit: ", this.sensorUnit)
-            this.sensorUnit = this.previousSensorUnit;
-            // this.setSavedDisplaySiValue()
-            this.setItemValuesToUI();
-          }
-
         }
       ]
     });
@@ -1723,7 +1719,7 @@ export class ConnectorParameterSetupPage {
      * This is a alert controller popup which helps the user set specific value
      * @param item - the item chosen from the list
      */
-  enterPaswordPrompt() {
+  enterPasswordPrompt() {
     this.pcmchanneldataservice.passwordDeviceSetupPageFlag = true;
     this.pcmchanneldataservice.alert = this.alertCtrl.create({
       title: Constants.messages.passwordTitle,
@@ -1739,6 +1735,17 @@ export class ConnectorParameterSetupPage {
       ],
       buttons: [
         {
+          text: Constants.messages.cancel,
+          handler: data => {
+
+            try {
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
+
+          }
+        },
+        {
           text: Constants.messages.apply,
           handler: data => {
 
@@ -1749,19 +1756,6 @@ export class ConnectorParameterSetupPage {
             }
 
           }
-        },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-
-            try {
-
-            } catch (error) {
-              console.log(JSON.stringify(error));
-            }
-
-          }
-
         }
       ]
     });

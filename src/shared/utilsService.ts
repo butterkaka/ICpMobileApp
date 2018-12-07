@@ -44,7 +44,7 @@ export class UtilsService {
             this.ble.writeWithoutResponse(deviceID, serviceID, characteristicID, value).then(
             result => {
             }).catch(error => {
-            console.log(JSON.stringify(error));
+            console.log("error in write to device:" + JSON.stringify(error));
             });
             if(delay!=0)
                   await this.sleep(delay);

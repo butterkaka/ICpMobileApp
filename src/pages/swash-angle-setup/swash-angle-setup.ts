@@ -75,7 +75,7 @@ export class SwashAngleSetupPage {
   * @event ionViewDidLoad PageLoad Event  
   */
   ionViewDidLoad() {
-    this.utilsService.presentLoading();
+    // this.utilsService.presentLoading();
     console.log(Constants.messages.ionViewDidLoadSwashAngleSetupPage);
     //this.readRegualtorSetupParameters();
   }
@@ -84,6 +84,7 @@ export class SwashAngleSetupPage {
   * @event ionViewDidEnter  
   */
   ionViewDidEnter() {
+    this.utilsService.presentLoading();
     this.disabled=false;
     this.initializeStartNotify();
     

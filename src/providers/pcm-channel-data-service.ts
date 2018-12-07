@@ -181,20 +181,16 @@ export class PCMChannelDataService {
   ];
 
   static getLiveTuneValuesList(LiveTuneType) {
-
-
     let liveTunepValuesList = {
       'PressureRegulator': [
-        { 'Title': Constants.values.pPartGain, Value: 0, Min: 0, Max: 1000, Steps: 1, Metric: '%', 'rType': 2, 'wType': 3, 'channel': Constants.channels.pressurePIDRegChannel, 'subchannel': Constants.channels.pPartGainPressureRegSubChannel },
-        { 'Title': Constants.values.iPartTime, Value: 0, Min: 0.5, Max: 10000, Steps: 0.1, Metric: 's', 'rType': 2, 'wType': 3, 'channel': Constants.channels.pressurePIDRegChannel, 'subchannel': Constants.channels.iPartTimePressureRegSubChannel },
-        { 'Title': Constants.values.dPartGain, Value: 0, Min: 0, Max: 1000, Steps: 1, Metric: '%', 'rType': 2, 'wType': 3, 'channel': Constants.channels.pressurePIDRegChannel, 'subchannel': Constants.channels.dPartGainPressureRegSubChannel }
+        { 'Title': Constants.values.pPartGain, Value: 0, Min: 0, Max: 1000, Steps: 1, Metric: '%', 'rType': 2, 'wType': 3, 'channel': Constants.channels.pressurePIDRegChannel, 'subchannel': Constants.channels.pPartGainPressureRegSubChannel, 'liveTuneStepChannel': Constants.channels.liveTuneStepChannel, 'liveTuneStepUpSubChannel': Constants.channels.pressurePpartUpSubChannel, 'liveTuneStepDownSubChannel': Constants.channels.pressurePpartDownSubChannel },
+        { 'Title': Constants.values.iPartTime, Value: 0, Min: 0.5, Max: 10000, Steps: 0.1, Metric: 's', 'rType': 2, 'wType': 3, 'channel': Constants.channels.pressurePIDRegChannel, 'subchannel': Constants.channels.iPartTimePressureRegSubChannel, 'liveTuneStepChannel': Constants.channels.liveTuneStepChannel, 'liveTuneStepUpSubChannel': Constants.channels.pressureIpartUpSubChannel, 'liveTuneStepDownSubChannel': Constants.channels.pressureIpartDownSubChannel },
+        { 'Title': Constants.values.dPartGain, Value: 0, Min: 0, Max: 1000, Steps: 1, Metric: '%', 'rType': 2, 'wType': 3, 'channel': Constants.channels.pressurePIDRegChannel, 'subchannel': Constants.channels.dPartGainPressureRegSubChannel, 'liveTuneStepChannel': Constants.channels.liveTuneStepChannel, 'liveTuneStepUpSubChannel': Constants.channels.pressureDpartUpSubChannel, 'liveTuneStepDownSubChannel': Constants.channels.pressureDpartDownSubChannel }
       ],
       'SwashAngle': [
-
-        { 'Title': Constants.values.pPartGain, Value: 0, Min: 0, Max: 1000, Steps: 1, Metric: '%', 'rType': 2, 'wType': 3, 'channel': Constants.channels.PWMSettingsChannel, 'subchannel': Constants.channels.pPartGainSubChannel },
-        { 'Title': Constants.values.iPartTime, Value: 0, Min: 0.5, Max: 10000, Steps: 0.1, Metric: 's', 'rType': 2, 'wType': 3, 'channel': Constants.channels.PWMSettingsChannel, 'subchannel': Constants.channels.iPartTimeSubChannel }
+        { 'Title': Constants.values.pPartGain, Value: 0, Min: 0, Max: 1000, Steps: 1, Metric: '%', 'rType': 2, 'wType': 3, 'channel': Constants.channels.PWMSettingsChannel, 'subchannel': Constants.channels.pPartGainSubChannel, 'liveTuneStepChannel': Constants.channels.liveTuneStepChannel, 'liveTuneStepUpSubChannel': Constants.channels.swashPpartUpSubChannel, 'liveTuneStepDownSubChannel': Constants.channels.swashPpartDownSubChannel },
+        { 'Title': Constants.values.iPartTime, Value: 0, Min: 0.5, Max: 10000, Steps: 0.1, Metric: 's', 'rType': 2, 'wType': 3, 'channel': Constants.channels.PWMSettingsChannel, 'subchannel': Constants.channels.iPartTimeSubChannel, 'liveTuneStepChannel': Constants.channels.liveTuneStepChannel, 'liveTuneStepUpSubChannel': Constants.channels.swashIpartUpSubChannel, 'liveTuneStepDownSubChannel': Constants.channels.swashIpartDownSubChannel }
       ]
-
     }
     if (LiveTuneType == 1) {
       console.log('LiveTuneType selected :PressureRegulator')
@@ -202,8 +198,6 @@ export class PCMChannelDataService {
     } else if (LiveTuneType == 2) {
       return liveTunepValuesList.SwashAngle;
     }
-
-
   }
 
   constructor(private alertCtrl: AlertController) {

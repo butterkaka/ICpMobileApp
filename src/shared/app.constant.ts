@@ -376,6 +376,19 @@ export const Constants = {
         'numberChangeICp':'numberChangeICp'
     },
     'channels': {
+        // ## START livetune steps ##
+        'liveTuneStepChannel': 98,
+        'pressurePpartUpSubChannel': 1,
+        'pressurePpartDownSubChannel': 2,
+        'pressureIpartUpSubChannel': 3,
+        'pressureIpartDownSubChannel': 4,
+        'pressureDpartUpSubChannel': 5,
+        'pressureDpartDownSubChannel': 6,
+        'swashPpartUpSubChannel': 7,
+        'swashPpartDownSubChannel': 8,
+        'swashIpartUpSubChannel': 9,
+        'swashIpartDownSubChannel': 10,
+        // ## END livetune steps ##
         'standaloneSettingsChannel': 40,
         'PWMSettingsChannel': 30,
         'calibrateAnalogInput': 41,
