@@ -31,7 +31,7 @@ export class ScanDevicePage {
 
   appVersion = Constants.values["app-version"];
   devices;
-  splash = this.isSplashShown() ? false : true; //Make true if you want to recreate the new splash screen and uncomment in HTML
+  splash = this.isSplashShown ? false : true; //Make true if you want to recreate the new splash screen and uncomment in HTML
   isScanning;
   scanError;
   deviceObject: DeviceModel;

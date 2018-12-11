@@ -1,22 +1,21 @@
 import { LicensePage } from './../pages/license/license';
-
 import { PumpSetupPage } from './../pages/pump-setup-page/pump-setup-page';
 import { DeviceSetupPage } from './../pages/device-setup-page/device-setup-page';
 import { DeviceMainPage } from './../pages/device-main-page/device-main-page';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { ScanDevicePage } from '../pages/scan-device-page/scan-device-page'
-
-import { MyApp } from './app.component';
 import { RegulatorSetupPage } from '../pages/regulator-setup-page/regulator-setup-page'
-import { BLE } from '@ionic-native/ble';
-import { PCMChannelDataService } from '../providers/pcm-channel-data-service'
+import { ScanDevicePage } from '../pages/scan-device-page/scan-device-page'
 import { DriveLogPage } from '../pages/drive-log-page/drive-log-page'
 import { LiveTunePage } from '../pages/live-tune-page/live-tune-page'
 import { IOSetupPage } from '../pages/io-setup-page/io-setup-page'
+import {HomePage} from '../pages/home/home';
+
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { MyApp } from './app.component';
+import { BLE } from '@ionic-native/ble';
+import { PCMChannelDataService } from '../providers/pcm-channel-data-service'
 import '../../node_modules/chart.js/dist/Chart.bundle.min.js';
 import { ChartsModule } from 'ng2-charts/charts/charts';
 import { ImgMapComponent } from '../components/ng2-img-map-master/ng2-img-map'
@@ -33,6 +32,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NgIdleModule } from '@ng-idle/core';
 import { HttpModule } from '@angular/http';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { HttpModule } from '@angular/http';
     LiveTunePage,
     IOSetupPage,
     LicensePage,
-    ImgMapComponent
+    ImgMapComponent,
+    HomePage
 
   ],
   imports: [
@@ -68,7 +69,8 @@ import { HttpModule } from '@angular/http';
     DriveLogPage,
     LiveTunePage,
     LicensePage,
-    IOSetupPage
+    IOSetupPage,
+    HomePage
     
     //ImgMapComponent     
   ],
