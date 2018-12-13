@@ -59,7 +59,7 @@ export const Constants = {
         'value': 'value',
         'enter': ' enter ',
         'and': ' and ',
-        'cancel': 'cancel',
+        'cancel': 'Cancel',
         'enterValueWithin': 'Please enter value within ',
         'functionInputStatus': 'Function Input ',
         'limitIssue': 'Limit Issue:',

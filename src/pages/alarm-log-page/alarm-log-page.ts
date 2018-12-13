@@ -544,6 +544,19 @@ export class AlarmLogPage {
       ],
       buttons: [
         {
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
+          handler: data => {
+
+            try {
+
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
+
+          }
+
+        },
+        {
           text: Constants.messages.apply,
           handler: data => {
 
@@ -554,19 +567,6 @@ export class AlarmLogPage {
             }
 
           }
-        },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-
-            try {
-
-            } catch (error) {
-              console.log(JSON.stringify(error));
-            }
-
-          }
-
         }
       ]
     });

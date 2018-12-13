@@ -443,7 +443,7 @@ export class RampSetupPage {
         ],
         buttons: [
           {
-            text: Constants.messages.cancel
+            text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
           },
           {
             text: Constants.messages.apply,
@@ -504,7 +504,7 @@ export class RampSetupPage {
           }
         },
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
 
             try {

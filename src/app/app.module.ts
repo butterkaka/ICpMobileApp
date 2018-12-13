@@ -26,6 +26,8 @@ import { DatePipe } from '@angular/common'
 import { FileOpener } from '@ionic-native/file-opener'
 // For Android only comment this both for IOS
 import { FileChooser } from '@ionic-native/file-chooser';
+// For IOS 
+import { IOSFilePicker } from '@ionic-native/file-picker';
 import { IonicStorageModule } from '@ionic/storage';
 import { FilePath } from '@ionic-native/file-path';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -80,6 +82,7 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
     PCMChannelDataService,
     File,
     FileChooser,
+    IOSFilePicker,
     EmailComposer,
     DatePipe,
     FileOpener,

@@ -5,6 +5,7 @@ import { DeviceModel, AtmQuestionTypeModel } from '../../Models/ExportModelClass
 import { BLE } from '@ionic-native/ble';
 import { PCMChannelDataService } from '../../providers/pcm-channel-data-service';
 import { LiveTunePage } from './../live-tune-page/live-tune-page';
+import { UtilsService } from '../../shared/utilsService';
 
 
 /**
@@ -17,6 +18,7 @@ import { LiveTunePage } from './../live-tune-page/live-tune-page';
 @Component({
   selector: 'page-regulator-setup-page',
   templateUrl: 'regulator-setup-page.html',
+  providers: [UtilsService]
 })
 export class RegulatorSetupPage {
   headerLabel = "Regulator Setup";
@@ -56,7 +58,7 @@ export class RegulatorSetupPage {
  * @param pcmchanneldataservice PCMChannelDataService for UI 
  */
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    private ble: BLE, private cd: ChangeDetectorRef, public loadingController: LoadingController, public pcmchanneldataservice: PCMChannelDataService) { //,public alertService:AlertServiceProvider
+    private ble: BLE, private cd: ChangeDetectorRef, public loadingController: LoadingController, public pcmchanneldataservice: PCMChannelDataService, public utilsService: UtilsService) { //,public alertService:AlertServiceProvider
     //this.deviceObject = navParams.get(Constants.values.deviceObject);
     this.deviceObject = pcmchanneldataservice.deviceObjectGlobal;
     this.items = pcmchanneldataservice.regulatorSetupItems;
@@ -423,7 +425,7 @@ export class RegulatorSetupPage {
           }
         },
         {
-          text: Constants.messages.cancel
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
         }
       ]
     });

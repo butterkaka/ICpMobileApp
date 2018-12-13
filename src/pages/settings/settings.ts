@@ -7,6 +7,7 @@ import { DeviceModel } from '../../Models/ExportModelClass';
 import { Storage } from '@ionic/storage';
 import { AtmAuthenticationTypeModel } from './../../Models/AtmAuthenticationModel';
 import { BLE } from '@ionic-native/ble';
+import { UtilsService } from '../../shared/utilsService';
 
 /**
  * Generated class for the SettingsPage page.
@@ -18,6 +19,7 @@ import { BLE } from '@ionic-native/ble';
 @Component({
   selector: 'page-settings',
   templateUrl: 'settings.html',
+  providers: [UtilsService]
 })
 export class SettingsPage {
   headerLabel = "App settings";
@@ -42,7 +44,7 @@ export class SettingsPage {
   atmAuthenticationTypeObject: AtmAuthenticationTypeModel;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pcmchanneldataservice: PCMChannelDataService, private ble: BLE,
-    public alertCtrl: AlertController, public pcmChannelDataservice: PCMChannelDataService, private storage: Storage, private cd: ChangeDetectorRef) {
+    public alertCtrl: AlertController, public pcmChannelDataservice: PCMChannelDataService, private storage: Storage, private cd: ChangeDetectorRef, public utilsService: UtilsService) {
     // this.firmwareVersion = navParams.get("firmwareVersion");
     this.deviceObject = this.pcmChannelDataservice.deviceObjectGlobal;
     this.deviceName = this.deviceObject.deviceName;
@@ -108,7 +110,7 @@ export class SettingsPage {
         ],
         buttons: [
           {
-            text: Constants.messages.cancel,
+            text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
 
           },
           {
@@ -270,7 +272,7 @@ export class SettingsPage {
 
       buttons: [
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
             try {
             } catch (error) {
@@ -313,7 +315,7 @@ export class SettingsPage {
       ],
       buttons: [
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
 
             try {
@@ -395,7 +397,7 @@ export class SettingsPage {
         ],
         buttons: [
           {
-            text: Constants.messages.cancel,
+            text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           },
           {
             text: Constants.messages.apply,

@@ -992,7 +992,7 @@ export class ConnectorParameterSetupPage {
         ],
         buttons: [
           {
-            text: Constants.messages.cancel,
+            text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
             handler: data => {
               this.disabledTrue = true;
             }
@@ -1053,7 +1053,7 @@ export class ConnectorParameterSetupPage {
       enableBackdropDismiss: false,
       buttons: [
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
             this.isCalibratingModalOpen = false;
             this.calibrationCount = 0;
@@ -1515,7 +1515,7 @@ export class ConnectorParameterSetupPage {
       enableBackdropDismiss: false,
       buttons: [
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
             console.log("Cancel previoussSensorUnit: ", this.previousSensorUnit, " previoussSensorUnit: ", this.sensorUnit)
             this.sensorUnit = this.previousSensorUnit;
@@ -1735,7 +1735,7 @@ export class ConnectorParameterSetupPage {
       ],
       buttons: [
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
 
             try {

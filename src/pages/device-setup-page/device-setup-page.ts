@@ -17,6 +17,9 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import { FileOpener } from '@ionic-native/file-opener'
 // For Android only comment this both for IOS
 import { FileChooser } from '@ionic-native/file-chooser';
+// For IOS
+import { IOSFilePicker } from '@ionic-native/file-picker';
+
 import { FilePath } from '@ionic-native/file-path';
 // import { GESTURE_PRIORITY_MENU_SWIPE } from 'ionic-angular/umd/gestures/gesture-controller';
 // import { fromEventPattern } from 'rxjs';
@@ -70,7 +73,7 @@ export class DeviceSetupPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public pcmchanneldataservice: PCMChannelDataService, private cd: ChangeDetectorRef,
     public alertCtrl: AlertController, private ble: BLE, private file: File, private pcmParameterDataSaveServiceProvider: PcmParameterDataSaveServiceProvider,
     public loadingController: LoadingController, public platform: Platform, public emailComposer: EmailComposer, private fileOpener: FileOpener,
-    private datepipe: DatePipe, private fileChooser: FileChooser, private filePath: FilePath, public utilsService: UtilsService) {
+    private datepipe: DatePipe, private fileChooser: FileChooser, private filePicker: IOSFilePicker, private filePath: FilePath, public utilsService: UtilsService) {
     this.deviceObject = navParams.get("deviceObject");
 
     // For Android only
@@ -502,13 +505,13 @@ export class DeviceSetupPage {
 
         buttons: [
           {
+            text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
+          },
+          {
             text: Constants.messages.apply,
             handler: data => {
               this.writeEepromData();
             }
-          },
-          {
-            text: Constants.messages.cancel
           }
         ]
       });
@@ -653,7 +656,12 @@ export class DeviceSetupPage {
       subTitle: Constants.messages.filepresentSubheader,
 
       buttons: [
-
+        {
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
+          handler: data => {
+            this.pcmchanneldataservice.loaderGlobal.dismiss();
+          }
+        },
         {
           text: Constants.messages.ok,
           handler: data => {
@@ -662,12 +670,6 @@ export class DeviceSetupPage {
           }
 
         },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-            this.pcmchanneldataservice.loaderGlobal.dismiss();
-          }
-        }
       ]
     });
     this.pcmchanneldataservice.alert.present();
@@ -763,20 +765,28 @@ export class DeviceSetupPage {
         //   }
         // },
         {
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
+        },
+        {
           text: "Browse",
           handler: data => {
             //for android
             this.pcmchanneldataservice.appResetFlag=false;
             //this.pcmchanneldataservice.disconnectAfterResume=false;
-            this.fileChooserFunction();
+
+            if(this.platform.is('ios')){
+              this.filePicker.pickFile()
+              .then(uri => console.log(uri))
+              .catch(err => console.log('Error',err));
+              alert('file IOS');
+            }
+            else{
+              this.fileChooserFunction();
+            }
 
             // for ios
             //this.pickFileForIOSFromDocumentProvider();
           }
-
-        },
-        {
-          text: "Cancel"
         }
       ]
     });
@@ -1126,7 +1136,7 @@ export class DeviceSetupPage {
           }
         },
         {
-          text: Constants.messages.cancel
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
         }
       ]
     });
@@ -1174,6 +1184,9 @@ export class DeviceSetupPage {
       ],
       buttons: [
         {
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
+        },
+        {
           text: Constants.messages.apply,
           handler: data => {
             let regexp = /[^\w\s]/;
@@ -1187,10 +1200,6 @@ export class DeviceSetupPage {
             }
             console.log("data.value: ", data.value);
           }
-        },
-
-        {
-          text: Constants.messages.cancel
         }
       ]
     });
@@ -1218,6 +1227,18 @@ export class DeviceSetupPage {
       ],
       buttons: [
         {
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
+          handler: data => {
+
+            try {
+
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
+
+          }
+        },
+        {
           text: Constants.messages.apply,
           handler: data => {
 
@@ -1228,19 +1249,6 @@ export class DeviceSetupPage {
             }
 
           }
-        },
-        {
-          text: Constants.messages.cancel,
-          handler: data => {
-
-            try {
-
-            } catch (error) {
-              console.log(JSON.stringify(error));
-            }
-
-          }
-
         }
       ]
     });

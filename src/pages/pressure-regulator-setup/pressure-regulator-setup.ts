@@ -579,7 +579,7 @@ export class PressureRegulatorSetupPage {
         ],
         buttons: [
           {
-            text: Constants.messages.cancel
+            text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
           },
           {
             text: Constants.messages.apply,
@@ -619,7 +619,7 @@ export class PressureRegulatorSetupPage {
           }
         },
         {
-          text: Constants.messages.cancel
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
         }
       ]
     });
@@ -666,7 +666,7 @@ export class PressureRegulatorSetupPage {
           }
         },
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
 
             try {

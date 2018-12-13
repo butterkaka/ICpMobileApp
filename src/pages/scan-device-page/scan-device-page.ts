@@ -31,7 +31,7 @@ export class ScanDevicePage {
 
   appVersion = Constants.values["app-version"];
   devices;
-  splash = this.isSplashShown ? false : true; //Make true if you want to recreate the new splash screen and uncomment in HTML
+  splash = this.isSplashShown() ? false : true; //Make true if you want to recreate the new splash screen and uncomment in HTML
   isScanning;
   scanError;
   deviceObject: DeviceModel;
@@ -504,7 +504,7 @@ asHexString(i) {
       ],
       buttons: [
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
             this.pcmchanneldataservice.passwordPromt = false;
         

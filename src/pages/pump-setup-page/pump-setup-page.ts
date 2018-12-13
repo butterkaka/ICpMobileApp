@@ -121,7 +121,7 @@ export class PumpSetupPage {
     var pumpSetupInputList = JSON.parse(JSON.stringify(this.items));
     for(let element of pumpSetupInputList){
     //pumpSetupInputList.forEach(element => {
-      var byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
+      byteArray = new Uint8Array([element.rType, 0, element.channel, element.subchannel, 0, 0]);
       await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
     //});
     }
@@ -514,7 +514,7 @@ export class PumpSetupPage {
       ],
       buttons: [
         {
-          text: Constants.messages.cancel
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
         },
         {
           text: Constants.messages.apply,
@@ -583,7 +583,7 @@ export class PumpSetupPage {
           }
         },
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
 
             try {

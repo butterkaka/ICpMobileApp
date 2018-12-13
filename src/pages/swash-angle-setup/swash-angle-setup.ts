@@ -557,7 +557,7 @@ export class SwashAngleSetupPage {
       ],
       buttons: [
         {
-          text: Constants.messages.cancel
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
         },
         {
           text: Constants.messages.apply,
@@ -604,7 +604,7 @@ enableBackdropDismiss: false,
           }
         },
         {
-          text: Constants.messages.cancel
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel)
         }
       ]
     });
@@ -651,7 +651,7 @@ enableBackdropDismiss: false,
           }
         },
         {
-          text: Constants.messages.cancel,
+          text: this.utilsService.firstToUpperCase(Constants.messages.cancel),
           handler: data => {
 
             try {

@@ -49,4 +49,8 @@ export class UtilsService {
             if(delay!=0)
                   await this.sleep(delay);
       }
+
+      firstToUpperCase(str){
+            return str.substr(0,1).toUpperCase() + str.substr(1);
+      }
 }
