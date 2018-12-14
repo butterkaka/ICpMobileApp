@@ -24,7 +24,7 @@ import { FilePath } from '@ionic-native/file-path';
 // import { GESTURE_PRIORITY_MENU_SWIPE } from 'ionic-angular/umd/gestures/gesture-controller';
 // import { fromEventPattern } from 'rxjs';
 import { UtilsService } from '../../shared/utilsService';
-declare let FilePicker: any;
+// declare let FilePicker: any;
 
 /**
  * Generated class for the DeviceSetupPage page.
@@ -71,7 +71,7 @@ export class DeviceSetupPage {
   * @param navParams NavParams paremters from previous component
   */
   constructor(public navCtrl: NavController, public navParams: NavParams, public pcmchanneldataservice: PCMChannelDataService, private cd: ChangeDetectorRef,
-    public alertCtrl: AlertController, private ble: BLE, private file: File, private pcmParameterDataSaveServiceProvider: PcmParameterDataSaveServiceProvider,
+    public alertCtrl: AlertController, private ble: BLE, private file: File,
     public loadingController: LoadingController, public platform: Platform, public emailComposer: EmailComposer, private fileOpener: FileOpener,
     private datepipe: DatePipe, private fileChooser: FileChooser, private filePicker: IOSFilePicker, private filePath: FilePath, public utilsService: UtilsService) {
     this.deviceObject = navParams.get("deviceObject");
@@ -556,13 +556,11 @@ export class DeviceSetupPage {
     this.operation = Constants.values.SaveToFile;
     this.atmQuestionObjectList = [];
     this.countAtmQList = 0;
-    let i = 0;
     this.isReadRunning = true;
 
     this.parameterFileObject = PcmParameterDataSaveServiceProvider.getAllParametersList();
 
     for (let element of this.parameterFileObject) {
-      i++;
       //console.log("i val : " + i + "channel : " + element.channel + "element.subchannel :" + element.subchannel);
       var byteArray = new Uint8Array([Constants.values.rType, 0, element.channel, element.subchannel, 0, 0]);
       await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer);
@@ -590,8 +588,6 @@ export class DeviceSetupPage {
     // compare atmQuestionObjectList vs paramterFileObject
 
     let existFlag = false;
-    let i = 0;
-
     for (let element of this.parameterFileObject) {
 
       existFlag = false;
@@ -602,7 +598,6 @@ export class DeviceSetupPage {
       });
 
       if (existFlag == false) {
-        i++;
         //console.log("i val : " + i + "channel : " + element.channel + "element.subchannel :" + element.subchannel);
         var byteArray = new Uint8Array([Constants.values.rType, 0, element.channel, element.subchannel, 0, 0]);
         await this.utilsService.write(this.deviceObject.deviceId, this.deviceObject.serviceUUID, this.deviceObject.characteristicId, byteArray.buffer,5);
@@ -775,10 +770,11 @@ export class DeviceSetupPage {
             //this.pcmchanneldataservice.disconnectAfterResume=false;
 
             if(this.platform.is('ios')){
-              this.filePicker.pickFile()
-              .then(uri => console.log(uri))
-              .catch(err => console.log('Error',err));
-              alert('file IOS');
+              this.pickFileForIOSFromDocumentProvider();
+              // this.filePicker.pickFile()
+              // .then(uri => console.log(uri))
+              // .catch(err => console.log('Error',err));
+              // alert('file IOS');
             }
             else{
               this.fileChooserFunction();
@@ -1037,7 +1033,6 @@ export class DeviceSetupPage {
 
     console.log("Check Load Mismatch")
     let existFlag = false;
-    let i = 0;
     let val1;
     let val2;
     let val3;
@@ -1054,7 +1049,6 @@ export class DeviceSetupPage {
       });
 
       if (existFlag == false) {
-        i++;
         //console.log("i val : " + i + "channel : " + element.channel + "element.subchannel :" + element.subchannel);
         value32 = element.value;
 
@@ -1074,14 +1068,15 @@ export class DeviceSetupPage {
   */
   pickFileForIOSFromDocumentProvider() {
 
-    FilePicker.isAvailable(function (avail) {
-      //alert(avail ? "YES" : "NO");
-    });
-    let errorCallback = "error jk";
+    // FilePicker.isAvailable(function (avail) {
+    //   //alert(avail ? "YES" : "NO");
+    // });
+    // let errorCallback = "error jk";
+    // FilePicker.pickFile(successCallback.bind(this), errorCallback);
 
-
-
-    FilePicker.pickFile(successCallback.bind(this), errorCallback);
+    this.filePicker.pickFile()
+    .then(successCallback.bind(this))
+    .catch(err => console.log('Error', err));
 
     function successCallback(path) {
 
@@ -1112,11 +1107,11 @@ export class DeviceSetupPage {
   presentEmailAlert() {
 
     this.pcmchanneldataservice.alert = this.alertCtrl.create({
-      title: Constants.messages.saveToFileAlertHeader + ":",
+      title: Constants.messages.saveToFileAlertMessageSuccess,
       //for IOS
       //subTitle: Constants.messages.emailSubheaderIOS,
       // for android
-      subTitle: Constants.messages.emailSubheaderAndroid + "<br/><u>Path:</u><br/><b>" + this.filePlatformSpecificPathDataDirectory + this.platformSpeceficProvidedFileName + Constants.values.fileExtentionText + "</b>",
+      subTitle: (this.platform.is('ios') ? Constants.messages.emailSubheaderIOS : Constants.messages.emailSubheaderAndroid) + "<br/><u>Path:</u><br/><b>" + this.filePlatformSpecificPathDataDirectory + this.platformSpeceficProvidedFileName + Constants.values.fileExtentionText + "</b>",
 
       buttons: [
         {

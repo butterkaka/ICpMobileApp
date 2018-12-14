@@ -1,7 +1,7 @@
 import { DeviceMainPage } from './../device-main-page/device-main-page';
 import { LicensePage} from './../license/license';
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, List } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { DeviceModel, AtmQuestionTypeModel } from '../../Models/ExportModelClass';
 import { PCMChannelDataService } from '../../providers/pcm-channel-data-service';
@@ -10,8 +10,6 @@ import { IOSetupPage } from '../io-setup-page/io-setup-page'
 import { Idle } from '@ng-idle/core';
 import { AtmAuthenticationTypeModel } from '../../Models/AtmAuthenticationModel';
 import { Storage } from '@ionic/storage';
-import { registerModuleFactory } from '@angular/core/src/linker/ng_module_factory_loader';
-import { TimeoutDebouncer } from 'ionic-angular/umd/util/debouncer';
 
 import { UtilsService } from '../../shared/utilsService';
 /**
@@ -253,7 +251,9 @@ export class ScanDevicePage {
 
         console.log("### " + device.name + " ###");
         console.log(advertisingData);
-        this.devices.push(device);
+
+        this.devices.findIndex(d => d.id == device.id) === -1 ? this.devices.push(device) : console.log("This item already exists");
+        // this.devices.push(device);
     }
   }
 
@@ -354,20 +354,15 @@ asHexString(i) {
   * @param {JSON} device - The device object has the device details
   */
   addToFavorites(device){
-    var exists  = false;
     if(this.favorites != null){
-      this.favorites.forEach(element => {
-        if(element.name == device.name)
-          exists = true;
-      });
+      let index = this.favorites.findIndex(f=> f.name == device.name);
+      if(index === -1){
+        this.favorites.push(device);
+        this.storage.set("favorites", this.favorites);
+      }
     }
     else 
       this.favorites = [];
-
-    if(!exists){
-      this.favorites.push(device);
-      this.storage.set("favorites", this.favorites);
-    }
   }
 
     /** 

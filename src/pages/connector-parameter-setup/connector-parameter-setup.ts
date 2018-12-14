@@ -5,7 +5,7 @@ import { PCMChannelDataService } from '../../providers/pcm-channel-data-service'
 import { BLE } from '@ionic-native/ble';
 import { DeviceModel, AtmQuestionTypeModel } from '../../Models/ExportModelClass';
 import { Chart } from 'chart.js';
-import { Storage } from '@ionic/storage';
+// import { Storage } from '@ionic/storage';
 import { AtmAuthenticationTypeModel } from './../../Models/AtmAuthenticationModel';
 
 import { UtilsService } from './../../shared/utilsService';
@@ -115,7 +115,7 @@ export class ConnectorParameterSetupPage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pcmchanneldataservice: PCMChannelDataService, private cd: ChangeDetectorRef,
-    public alertCtrl: AlertController, private ble: BLE, public keyboard: Keyboard, private storage: Storage, public utilsService: UtilsService, public app: App) {
+    public alertCtrl: AlertController, private ble: BLE, public keyboard: Keyboard, public utilsService: UtilsService, public app: App) {
 
     this.connector = navParams.get(Constants.values.connector);
     this.connectorValObj = navParams.get(Constants.values.connectorValObj);
@@ -599,7 +599,7 @@ export class ConnectorParameterSetupPage {
     // this.atmQuestionObjectList = [];
     // this.countAtmQList = 0;
 
-    let exists = false;
+    // let exists = false;
 
     this.ble.startNotification(deviceId, serviceUUID, characteristic).subscribe(buffer => {
       var responseObject = (new AtmQuestionTypeModel(new Uint8Array(buffer)));

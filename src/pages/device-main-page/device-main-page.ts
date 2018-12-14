@@ -8,7 +8,6 @@ import { PCMChannelDataService } from '../../providers/pcm-channel-data-service'
 import { Constants } from '../../shared/app.constant';
 import { Storage } from '@ionic/storage';
 import { Idle } from '@ng-idle/core';
-import { LiveGraphPage } from './../live-graph-page/live-graph-page';
 import { UtilsService } from '../../shared/utilsService';
 // import { Keepalive } from '@ng-idle/keepalive';
 

@@ -1,13 +1,11 @@
 import { ScanDevicePage } from './../pages/scan-device-page/scan-device-page';
-import { DeviceSetupPage } from './../pages/device-setup-page/device-setup-page';
 import { Component } from '@angular/core';
-import { Nav, Platform, App, AlertController } from 'ionic-angular';
+import { Platform, App, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PCMChannelDataService } from '../providers/pcm-channel-data-service'
 import { BLE } from '@ionic-native/ble';
 import { DeviceMainPage } from './../pages/device-main-page/device-main-page';
-// import { IOSetupPage } from './../pages/io-setup-page/io-setup-page';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Constants } from "../shared/app.constant";
 

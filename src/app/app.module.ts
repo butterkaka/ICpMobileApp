@@ -34,7 +34,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NgIdleModule } from '@ng-idle/core';
 import { HttpModule } from '@angular/http';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+// import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @NgModule({
   declarations: [

@@ -1,7 +1,7 @@
 import { Constants } from './../../shared/app.constant';
 import { Chart } from 'chart.js';
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Item } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { BLE } from '@ionic-native/ble';
 import { PCMChannelDataService } from '../../providers/pcm-channel-data-service'
 import { DeviceModel, AtmQuestionTypeModel } from '../../Models/ExportModelClass';
@@ -40,11 +40,15 @@ export class LiveTunePage {
       this.graphHeader = Constants.messages.setpointVsSwashAngle;
       this.minYAxesValue = -100;
       this.maxYAxesValue = 100;
+      this.minSetpointYAxesValue = -100;
+      this.maxSetpointYAxesValue = 100;
     }
     else {
       this.graphHeader = Constants.messages.setpointVsPressure;
       this.minYAxesValue = this.conversionToUnit(0);
       this.maxYAxesValue = this.conversionToUnit(450);
+      this.minSetpointYAxesValue = 0;
+      this.maxSetpointYAxesValue = 100;
     }
     //console.log('liveTuneGraphType:' + this.liveTuneGraphType);
     this.items = PCMChannelDataService.getLiveTuneValuesList(this.liveTuneGraphType);
@@ -118,6 +122,8 @@ export class LiveTunePage {
   temp = 0;
   minYAxesValue;
   maxYAxesValue;
+  minSetpointYAxesValue;
+  maxSetpointYAxesValue;
 
   /** 
  * @event ionViewDidLoad PageLoad Event  
@@ -190,8 +196,10 @@ export class LiveTunePage {
           type: 'linear',
           position: 'left',
           ticks: {
-            min: 0,
-            max: 100
+            min: this.minSetpointYAxesValue,
+            max: this.maxSetpointYAxesValue
+            // min: -100,
+            // max: 100
           },
            gridLines: {
                     display:false

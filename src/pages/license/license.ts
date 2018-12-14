@@ -1,7 +1,6 @@
 import { PCMChannelDataService } from './../../providers/pcm-channel-data-service';
 import { Component } from '@angular/core';
 import {  NavController, NavParams } from 'ionic-angular';
-import { Http } from '@angular/http';
 
 /**
  * Generated class for the LicensePage page.
@@ -19,7 +18,7 @@ export class LicensePage {
   information: any[];
   //information = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public pcmChannelDataService: PCMChannelDataService, private http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public pcmChannelDataService: PCMChannelDataService) {
     // let localData = http.get('assets/licensePageInfo.json').map(res => res.json().items);
     // localData.subscribe(data => {
     //   this.information = data;

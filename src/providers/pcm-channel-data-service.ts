@@ -1277,6 +1277,11 @@ export class PCMChannelDataService {
         "link": "https://www.npmjs.org/package/cordova-plugin-whitelist"
       },
       {
+        "name": "cordova-plugin-itunesfilesharing",
+        "version": "0.0.2",
+        "link": "https://www.npmjs.org/package/cordova-plugin-itunesfilesharing"
+      },
+      {
         "name": "cordova-registry-mapper",
         "version": "1.1.15",
         "link": "https://www.npmjs.org/package/cordova-registry-mapper"

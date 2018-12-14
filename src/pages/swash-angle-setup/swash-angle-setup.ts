@@ -8,7 +8,7 @@ import { LiveTunePage } from './../live-tune-page/live-tune-page';
 import { AtmAuthenticationTypeModel } from './../../Models/AtmAuthenticationModel';
 
 import { UtilsService } from './../../shared/utilsService';
-import { trigger } from '@angular/core/src/animation/dsl';
+// import { trigger } from '@angular/core/src/animation/dsl';
 
 /**
  * Generated class for the SwashAngleSetupPage page.
